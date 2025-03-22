@@ -23,14 +23,14 @@ end
 ---@field [integer] string
 
 ---Module version
-M.VERSION='4.0'
+M.VERSION='4.0.1'
 
 ---Decodes `source` localization to lualoca.group so you can use it
 ---@param funlutab funlutab
 ---@param source lualoca.source
 ---@return lualoca.group
 function M.decode(funlutab, source)
-	if not funlutab then error('"funlutab" param not specified. You must specify the funlutab module (https://github.com/Mantyi-Studio/funlutab)', 2) end
+	if not funlutab then error('"funlutab" param not specified. You must specify the funlutab module (https://github.com/greedy-chapa/funlutab)', 2) end
 	local decoded={}
 	for name, phrase in pairs(source) do
 		if phrase[1] then phrase=table.concat(phrase, '\n') end
@@ -136,14 +136,14 @@ local function DEFAULT_READ(path)
 end
 
 ---Returns new lualoca instance
----@param funlutab funlutab https://github.com/Mantyi-Studio/funlutab version 2.1.1 - latest 2.x
+---@param funlutab funlutab https://github.com/greedy-chapa/funlutab version 2.1.1 - latest 2.x
 ---@param json table json module https://github.com/rxi/json.lua version 0.1.2
 ---@param path string path to folder with json files of localizations
 ---@param path_to_params string path to json file with params for all languages
 ---@param read? fun(path: string): string|nil custom read function
 ---@return lualoca.instance
 function M.Instance(funlutab, json, path, path_to_params, read)
-	if not funlutab then error('"funlutab" param not specified. You must specify the funlutab module (https://github.com/Mantyi-Studio/funlutab)', 2) end
+	if not funlutab then error('"funlutab" param not specified. You must specify the funlutab module (https://github.com/greedy-chapa/funlutab)', 2) end
 	if not json then error('"funlutab" param not specified. You must specify the json module (https://github.com/rxi/json.lua)', 2) end
 	if not path then error('"path" param not specified. You must specify the path to json file with params for all languages', 2) end
 	if not path_to_params then error('"path_to_params" param is empty. You must specify the path to json file with params for all languages', 2) end
