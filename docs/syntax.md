@@ -28,6 +28,8 @@ Method [lualocaDE:to_object](https://github.com/Mantyi-Studio/lualocaDE/blob/mai
 **It only supports path and font params**. They must be separated by ";" symbol. To indicate what param it is before param value write 1st letter of its name ("p" - path, "f" - font) (you can write capital letter to make it easier to distinguish between param name and value).\
 Params:
 * font (f) - [font style](https://github.com/Mantyi-Studio/lualocaDE/blob/main/docs/syntax.md#font-names)
-* path (p) - path connected by "/"
+* path (p) - path connected by "/". "!" if no path
 
 Example: `Pwindows/settings/title;Fregular`
+
+Object without path: `P!`
