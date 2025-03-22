@@ -4,11 +4,12 @@
 local M={}
 
 ---@class lualocaDE.object: lualoca.object
+---@field path string[]|false|nil
 ---@field font string
 ---@field callback? fun(self: self, node: node|druid.text, text: string, language: string)
 
 ---Module version
-M.VERSION='4.0'
+M.VERSION='4.1'
 
 ---Creates a new lualocaDE object for `node`. If no `object` is specified, creates one based on `node` text.
 ---@param self lualocaDE.instance
@@ -52,8 +53,11 @@ local function to_object(self, string)
 		local value=string.sub(param, 2)
 		param=string.lower(string.sub(param, 1, 1))
 		if param=='p' then
-			object.path={}
-			for group in string.gmatch(value, '[^/]+') do self.data.funlutab.add(object.path, group) end
+			if value=='!' then object.path=false
+			else
+				object.path={}
+				for group in string.gmatch(value, '[^/]+') do self.data.funlutab.add(object.path, group) end
+			end
 		elseif param=='f' then object.font=value
 		end
 	end
@@ -67,12 +71,15 @@ local function update_node(self, node)
 	local object=self.objects[node]
 	local language=self.data.instances.main:get_language()
 	local params=self.data.params.main
-	local success, text=pcall(self.data.instances.main.get_text, self.data.instances.main, object)
-	if not success and self.data.instances.spare then
-		language=self.data.instances.spare:get_language()
-		---@type {[string]: any}
-		params=self.data.params.spare
-		success, text=pcall(self.data.instances.spare.get_text, self.data.instances.spare, object)
+	local success, text
+	if object.path~=false then
+		success, text=pcall(self.data.instances.main.get_text, self.data.instances.main, object)
+		if not success and self.data.instances.spare then
+			language=self.data.instances.spare:get_language()
+			---@type {[string]: any}
+			params=self.data.params.spare
+			success, text=pcall(self.data.instances.spare.get_text, self.data.instances.spare, object)
+		end
 	end
 	if type(node)=='userdata' then
 		---@type node
